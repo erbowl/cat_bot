@@ -18,7 +18,7 @@ class WebhookController < ApplicationController
     case event_type
     when "message"
       input_text = event["message"]["text"]
-      output_text = input_text
+      output_text = input_to_output(input_text)
     end
 
     client = LineClient.new(CHANNEL_ACCESS_TOKEN, OUTBOUND_PROXY)
@@ -41,5 +41,9 @@ class WebhookController < ApplicationController
     hash = OpenSSL::HMAC::digest(OpenSSL::Digest::SHA256.new, CHANNEL_SECRET, http_request_body)
     signature_answer = Base64.strict_encode64(hash)
     signature == signature_answer
+  end
+
+  def input_to_output(input)
+    return input*2
   end
 end

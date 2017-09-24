@@ -61,3 +61,10 @@ gem 'faraday_middleware'
 group :production do
   gem 'rails_12factor'
 end
+
+gem 'natto'
+group :development, :test do
+  gem 'pry-rails'
+  gem 'pry-byebug'
+  gem 'pry-doc'
+end
