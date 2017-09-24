@@ -62,10 +62,10 @@ group :production do
   gem 'rails_12factor'
 end
 
-gem 'natto'
-group :development, :test do
-  gem 'pry-rails'
-  gem 'pry-byebug'
-  gem 'pry-doc'
-end
-gem 'mecab', '0.996'
+# gem 'natto'
+# group :development, :test do
+#   gem 'pry-rails'
+#   gem 'pry-byebug'
+#   gem 'pry-doc'
+# end
+# gem 'mecab', '0.996'
