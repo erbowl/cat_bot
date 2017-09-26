@@ -62,6 +62,8 @@ class WebhookController < ApplicationController
       else
         return "しまったにゃ！指定したものを見つけることができなかったにゃ！"
       end
+    elsif input.include?("ありがと")
+      return "おやすい御用にゃฅ(๑•̀ω•́๑)ฅ"
     else
       # return "..."
     end
