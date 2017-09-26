@@ -15,8 +15,11 @@ class WebhookController < ApplicationController
     event_type = event["type"]
     replyToken = event["replyToken"]
 
+    id = (event["source"]["groupId"] || event["source"]["roomId"]) || event["source"]["userId"])
+
     case event_type
     when "message"
+      @group=Group.find_or_create_by(groupId:id)
       input_text = event["message"]["text"]
       output_text = input_to_output(input_text)
     end
@@ -44,6 +47,14 @@ class WebhookController < ApplicationController
   end
 
   def input_to_output(input)
-    return input*2
+    if input.include("追加") && input[/（(.*?)）/, 1].length>0
+      task_name=input[/（(.*?)）/, 1]
+      group.tasks.create(name:input[/（(.*?)）/, 1])
+      return task_name+"を登録しました！"
+    elsif input.include("一覧")
+      return "現在の一覧です。\n"+group.tasks.map{|e|e.name}.join("\n")
+    else
+      return "test"
+    end
   end
 end
