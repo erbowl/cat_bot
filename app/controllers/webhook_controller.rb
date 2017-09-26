@@ -63,7 +63,7 @@ class WebhookController < ApplicationController
         return "しまったにゃ！指定したものを見つけることができなかったにゃ！"
       end
     else
-      return "..."
+      # return "..."
     end
   end
 end
