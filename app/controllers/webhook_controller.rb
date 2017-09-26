@@ -15,7 +15,7 @@ class WebhookController < ApplicationController
     event_type = event["type"]
     replyToken = event["replyToken"]
 
-    id = (event["source"]["groupId"] || event["source"]["roomId"]) || event["source"]["userId"])
+    id = (event["source"]["groupId"] || event["source"]["roomId"]) || event["source"]["userId"]
 
     case event_type
     when "message"
