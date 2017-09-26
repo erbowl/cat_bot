@@ -56,9 +56,9 @@ class WebhookController < ApplicationController
       return "現在の一覧だにゃ🐾\n"+@group.tasks.map{|e|e.name}.join("\n")
     elsif input.include?("削除")
       task_name=input[/（(.*?)）/, 1]
-      if @group.tasks.where(name:task_name)
+      if @group.tasks.where(name:task_name).present?
         @group.tasks.where(name:task_name).delete_all
-        return task_name+"を削除したにゃ(ΦωΦ)もう取り消せないにゃ！"
+        return task_name+"を削除したにゃ(ΦωΦ)もう取り消せにゃいにゃ！"
       else
         return "しまったにゃ！指定したものを見つけることができなかったにゃ！"
       end
