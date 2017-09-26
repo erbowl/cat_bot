@@ -47,14 +47,23 @@ class WebhookController < ApplicationController
   end
 
   def input_to_output(input)
+    # いつかきれいにする
     if input.include?("追加")
       task_name=input[/（(.*?)）/, 1]
       @group.tasks.create(name:input[/（(.*?)）/, 1])
-      return task_name+"を登録しました！"
+      return task_name+"を登録したにゃ🐱"
     elsif input.include?("一覧")
-      return "現在の一覧です。\n"+@group.tasks.map{|e|e.name}.join("\n")
+      return "現在の一覧だにゃ🐾\n"+@group.tasks.map{|e|e.name}.join("\n")
+    elsif input.include?("削除")
+      task_name=input[/（(.*?)）/, 1]
+      if @group.tasks.where(name:task_name)
+        @group.tasks.where(name:task_name).delete_all
+        return task_name+"を削除したにゃ(ΦωΦ)もう取り消せないにゃ！"
+      else
+        return "しまったにゃ！指定したものを見つけることができなかったにゃ！"
+      end
     else
-      return "test"
+      return "..."
     end
   end
 end
