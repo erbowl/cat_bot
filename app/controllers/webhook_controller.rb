@@ -67,6 +67,9 @@ class WebhookController < ApplicationController
       @group.tasks.create(name:task_name)
       return task_name+"を登録したにゃ🐱"
     elsif input.include?("一覧")
+      if input.include?("応答")
+        return "現在の応答一覧だにゃ🐾\n"+@group.phrases.map{|e|"「"+e.if+"」といったら「"+e.then+"」"}.join("\n")
+      end
       return "現在の一覧だにゃ🐾\n"+@group.tasks.map{|e|e.name}.join("\n")
     end
 
