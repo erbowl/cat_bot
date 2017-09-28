@@ -54,7 +54,7 @@ class WebhookController < ApplicationController
       if @group.tasks.where(name:task_name).present?
         @group.tasks.where(name:task_name).delete_all
         return task_name+"を削除したにゃ(ΦωΦ)もう取り消せにゃいにゃ！"
-      elsif  @group.phrases.where(if:task_name).or(@group.tasks.where(then:task_name)).present?
+      elsif  @group.phrases.where(if:task_name).or(@group.phrases.where(then:task_name)).present?
         @group.phrases.where(if:task_name).or(@group.tasks.where(then:task_name)).delete_all
         return task_name+"は忘れてしまったにゃ😼"
       else
