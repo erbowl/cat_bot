@@ -3,7 +3,7 @@ class WebhookController < ApplicationController
   protect_from_forgery with: :null_session
 
   CHANNEL_SECRET = ENV['CHANNEL_SECRET']
-  OUTBOUND_PROXY = ENV['OUTBOUND_PROXY']
+  # OUTBOUND_PROXY = ENV['OUTBOUND_PROXY']
   CHANNEL_ACCESS_TOKEN = ENV['CHANNEL_ACCESS_TOKEN']
 
   def callback
@@ -24,7 +24,8 @@ class WebhookController < ApplicationController
       output_text = input_to_output(input_text)
     end
 
-    client = LineClient.new(CHANNEL_ACCESS_TOKEN, OUTBOUND_PROXY)
+    # client = LineClient.new(CHANNEL_ACCESS_TOKEN, OUTBOUND_PROXY)
+    client = LineClient.new(CHANNEL_ACCESS_TOKEN)
     res = client.reply(replyToken, output_text)
 
     if res.status == 200
