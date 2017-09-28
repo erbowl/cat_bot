@@ -50,13 +50,13 @@ class WebhookController < ApplicationController
     # いつかきれいにする
 
     if input.include?("削除")
-      task_name=input[/（(.*?)）/, 1]
-      if @group.tasks.where(name:task_name).present?
-        @group.tasks.where(name:task_name).delete_all
-        return task_name+"を削除したにゃ(ΦωΦ)もう取り消せにゃいにゃ！"
-      elsif  @group.phrases.where(if:task_name).or(@group.phrases.where(then:task_name)).present?
-        @group.phrases.where(if:task_name).or(@group.tasks.where(then:task_name)).delete_all
-        return task_name+"は忘れてしまったにゃ😼"
+      delete_name=input[/（(.*?)）/, 1]
+      if @group.tasks.where(name:delete_name).present?
+        @group.tasks.where(name:delete_name).delete_all
+        return delete_name+"を削除したにゃ(ΦωΦ)もう取り消せにゃいにゃ！"
+      elsif  @group.phrases.where(if:delete_name).or(@group.phrases.where(then:delete_name)).present?
+        @group.phrases.where(if:delete_name).or(@group.phrases.where(then:delete_name)).delete_all
+        return delete_name+"は忘れてしまったにゃ😼"
       else
         return "しまったにゃ！指定したものを見つけることができなかったにゃ！"
       end
