@@ -48,17 +48,8 @@ class WebhookController < ApplicationController
 
   def input_to_output(input)
     # いつかきれいにする
-    if @group.phrases.where(if:input)[0].present?
-      return @group.phrases.where(if:input)[0].then
-    end
 
-    if input.include?("追加")
-      task_name=input[/（(.*?)）/, 1]
-      @group.tasks.create(name:input[/（(.*?)）/, 1])
-      return task_name+"を登録したにゃ🐱"
-    elsif input.include?("一覧")
-      return "現在の一覧だにゃ🐾\n"+@group.tasks.map{|e|e.name}.join("\n")
-    elsif input.include?("削除")
+    if input.include?("削除")
       task_name=input[/（(.*?)）/, 1]
       if @group.tasks.where(name:task_name).present?
         @group.tasks.where(name:task_name).delete_all
@@ -69,18 +60,28 @@ class WebhookController < ApplicationController
       else
         return "しまったにゃ！指定したものを見つけることができなかったにゃ！"
       end
-    elsif input.include?("ありがと")
-      return "おやすい御用にゃฅ(๑•̀ω•́๑)ฅ"
+    end
 
-    elsif input.include?("といったら")
+    if input.include?("追加")
+      task_name=input[/（(.*?)）/, 1]
+      @group.tasks.create(name:task_name)
+      return task_name+"を登録したにゃ🐱"
+    elsif input.include?("一覧")
+      return "現在の一覧だにゃ🐾\n"+@group.tasks.map{|e|e.name}.join("\n")
+    end
+
+    if input.include?("といったら") || input.include?("と言ったら")
       if_text=input[/（(.*?)）/, 1]
       then_text=input.gsub(input[/（(.*?)）/],"")[/（(.*?)）/,1]
       if if_text.present? && then_text.present?
         @group.phrases.create(if:if_text,then:then_text)
         return "次から「"+if_text+"」って言われたら「"+then_text+"」って返すにゃん😻"
       end
-    else
-      # return "..."
     end
+
+    if @group.phrases.where(if:input)[0].present?
+      return @group.phrases.where(if:input)[0].then
+    end
+
   end
 end
