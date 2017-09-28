@@ -10,11 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170926063528) do
+ActiveRecord::Schema.define(version: 20170928053443) do
 
   create_table "groups", force: :cascade do |t|
     t.string "status"
     t.string "groupId"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "phrases", force: :cascade do |t|
+    t.string "group_id"
+    t.string "if"
+    t.string "then"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

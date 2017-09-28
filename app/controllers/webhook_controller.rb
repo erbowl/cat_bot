@@ -48,6 +48,10 @@ class WebhookController < ApplicationController
 
   def input_to_output(input)
     # いつかきれいにする
+    if @group.phrases.where(if:input)[0].present?
+      return @group.phrases.where(if:input)[0].then
+    end
+
     if input.include?("追加")
       task_name=input[/（(.*?)）/, 1]
       @group.tasks.create(name:input[/（(.*?)）/, 1])
@@ -59,11 +63,22 @@ class WebhookController < ApplicationController
       if @group.tasks.where(name:task_name).present?
         @group.tasks.where(name:task_name).delete_all
         return task_name+"を削除したにゃ(ΦωΦ)もう取り消せにゃいにゃ！"
+      elsif  @group.phrases.where(if:task_name).or(@group.tasks.where(then:task_name)).present?
+        @group.phrases.where(if:task_name).or(@group.tasks.where(then:task_name)).delete_all
+        return task_name+"は忘れてしまったにゃ😼"
       else
         return "しまったにゃ！指定したものを見つけることができなかったにゃ！"
       end
     elsif input.include?("ありがと")
       return "おやすい御用にゃฅ(๑•̀ω•́๑)ฅ"
+
+    elsif input.include?("といったら")
+      if_text=input[/（(.*?)）/, 1]
+      then_text=input.gsub(input[/（(.*?)）/],"")[/（(.*?)）/,1]
+      if if_text.present? && then_text.present?
+        @group.phrases.create(if:if_text,then:then_text)
+        return "次から「"+if_text+"」って言われたら「"+then_text+"」って返すにゃん😻"
+      end
     else
       # return "..."
     end
