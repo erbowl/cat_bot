@@ -69,3 +69,6 @@ end
 #   gem 'pry-doc'
 # end
 # gem 'mecab', '0.996'
+gem 'haml-rails'
+gem 'nested_form'
+gem "jquery-rails"

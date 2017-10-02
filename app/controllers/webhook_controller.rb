@@ -37,7 +37,21 @@ class WebhookController < ApplicationController
     head :not_found
   end
 
+  def edit
+    @group=Group.find(params[:id])
+    if request.patch?
+      if @group.update_attributes(group_params)
+
+      else
+        # render 'edit'
+      end
+    end
+  end
+
   private
+  def group_params
+    params.require(:group).permit(:tasks_attributes => [:id, :name, :group_id,  :_destroy],:phrases_attributes => [:id, :if,:then, :group_id,  :_destroy])
+  end
   # verify access from LINE
   def is_validate_signature
     signature = request.headers["X-LINE-Signature"]
@@ -79,8 +93,12 @@ class WebhookController < ApplicationController
       then_text=input.gsub(input[/（(.*?)）/],"")[/（(.*?)）/,1]
       if if_text.present? && then_text.present?
         @group.phrases.create(if:if_text,then:then_text)
-        return "次から「"+if_text+"」って言われたら「"+then_text+"」って返すにゃん😻"
+        return "次から「"+if_text+"」って言われたら「"+then_text+"」って返すにゃ😻"
       end
+    end
+
+    if input.include?("編集")
+      return app.edit_url(@group,:only_path=>false)
     end
 
     if @group.phrases.where(if:input)[0].present?
