@@ -98,7 +98,7 @@ class WebhookController < ApplicationController
     end
 
     if input.include?("編集")
-      return app.edit_url(@group,:only_path=>false)
+      return edit_url(@group,:only_path=>false)
     end
 
     if @group.phrases.where(if:input)[0].present?
