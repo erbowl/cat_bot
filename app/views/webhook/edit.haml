@@ -1,5 +1,5 @@
 %h1 もの覚えのよい猫bot
-= nested_form_for(@group, :url => {:controller => :webhook, :action => :edit}) do |f|
+= nested_form_for(@group, :url => {:controller => :webhook, :action => :edit},:remote => true) do |f|
   %h2 タスク
   = f.fields_for :tasks do |task_form|
     = task_form.text_field :name
@@ -9,8 +9,14 @@
   %h2 フレーズ
   = f.fields_for :phrases do |phrase_form|
     = phrase_form.text_field :if
+    といったら
     = phrase_form.text_field :then
     = phrase_form.link_to_remove "Remove this"
   = f.link_to_add "Add phrase", :phrases
   .actions
-    = f.submit
+    = f.submit :id=>"submit",:style=>"display:none"
+
+:javascript
+  $('input').keyup(function(){
+    $("#submit").click();
+  });
