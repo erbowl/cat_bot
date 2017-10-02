@@ -1,5 +1,5 @@
 %h1 もの覚えのよい猫bot
-= nested_form_for(@group, :url => {:controller => :webhook, :action => :edit},:remote => true) do |f|
+= nested_form_for(@group, :url => {:controller => :webhook, :action => :edit},:remote => false) do |f|
   %h2 タスク
   = f.fields_for :tasks do |task_form|
     = task_form.text_field :name
