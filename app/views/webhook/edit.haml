@@ -14,9 +14,4 @@
     = phrase_form.link_to_remove "Remove this"
   = f.link_to_add "Add phrase", :phrases
   .actions
-    = f.submit :id=>"submit",:style=>"display:none"
-
-:javascript
-  $('input').keyup(function(){
-    $("#submit").click();
-  });
+    = f.submit "更新",:id=>"submit"
